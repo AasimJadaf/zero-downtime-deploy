@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const VERSION = process.env.VERSION || "v3";
+const VERSION = process.env.VERSION || "v4";
 const ENVIRONMENT = process.env.ENVIRONMENT || "BLUE";
 
 app.get("/", (req, res) => {
