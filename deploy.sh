@@ -1,5 +1,3 @@
-#!/bin/bash
-
 echo "Starting deployment..."
 
 # Detect active environment
@@ -19,7 +17,7 @@ echo "Deploying to: $INACTIVE"
 # Stop and remove inactive container (if exists)
 docker rm -f app-$INACTIVE 2>/dev/null
 
-# Run new container (simulate new version)
+# Run new container
 docker run -d --name app-$INACTIVE -p $NEW_PORT:3000 \
 -e VERSION=v2 \
 -e ENVIRONMENT=$(echo $INACTIVE | tr a-z A-Z) \
@@ -43,7 +41,12 @@ if curl -s http://localhost:$NEW_PORT/health | grep -q "OK"; then
     docker rm -f app-$ACTIVE
 
     echo "Deployment successful!"
+    exit 0
 else
     echo "Health check failed. Rolling back..."
+
     docker rm -f app-$INACTIVE
+
+    echo "Deployment failed."
+    exit 1   # 🔥 THIS MAKES GITHUB MARK IT FAILED
 fi
