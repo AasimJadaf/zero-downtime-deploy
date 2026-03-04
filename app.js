@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "OK" });
+  res.status(500).json({ status: "OK" });
 });
 
 app.listen(PORT, () => {
